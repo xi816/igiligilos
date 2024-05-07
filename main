@@ -1,0 +1,28 @@
+#!/usr/bin/python3
+import sys;
+import lib.screenclear;
+from json import loads;
+
+from lib.input import os_input;
+from lib.output import os_output;
+from prg.clock import clock, clockDec;
+from help_msg import help_msg;
+
+with (open("config/colors/colors.json")) as fl:
+  colors = loads(fl.read());
+
+def main(argc: int, argv: list):
+  while (True):
+    com = os_input(colors, ">> ");
+    if (com == "exit"):
+      print("\x1B[0m", end="");
+      return 2;
+    elif (com == "help"):
+      help_msg();
+    elif (com == "clock-dec"):
+      os_output(colors, ", ".join(reversed(clockDec())));
+  return 0;
+
+if (__name__ == "__main__"):
+  sys.exit(main(len(sys.argv), sys.argv));
+
